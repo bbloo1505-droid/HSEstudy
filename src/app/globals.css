@@ -1,26 +1,153 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #0b0f14;
+  --bg-elevated: #111821;
+  --bg-soft: #17212b;
+  --panel: #121a24;
+  --panel-2: #162231;
+  --ink: #eef3f8;
+  --muted: #8b97a8;
+  --line: rgba(148, 163, 184, 0.14);
+  --line-strong: rgba(148, 163, 184, 0.28);
+  --accent: #2dd4a0;
+  --accent-strong: #22b88a;
+  --accent-dim: rgba(45, 212, 160, 0.12);
+  --violet: #8b7cff;
+  --violet-dim: rgba(139, 124, 255, 0.14);
+  --amber: #f0b429;
+  --amber-dim: rgba(240, 180, 41, 0.12);
+  --sky: #5b9fff;
+  --danger: #f07178;
+  --ok: #2dd4a0;
+  --warn: #f0b429;
+  --radius: 14px;
+  --shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+  --font-display: "Source Serif 4", Georgia, serif;
+  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--bg);
+  --color-foreground: var(--ink);
+  --font-sans: var(--font-sans);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(139, 124, 255, 0.12), transparent 55%),
+    radial-gradient(900px 500px at 90% 0%, rgba(45, 212, 160, 0.08), transparent 50%),
+    var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: rgba(45, 212, 160, 0.28);
+}
+
+.prose-study p {
+  line-height: 1.7;
+  color: #d5dde8;
+}
+
+.prose-study h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: var(--ink);
+}
+
+.prose-study ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+  display: grid;
+  gap: 0.35rem;
+  color: #d5dde8;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--line-strong);
+  background: var(--bg-soft);
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.badge-ok {
+  border-color: rgba(45, 212, 160, 0.35);
+  background: var(--accent-dim);
+  color: var(--accent);
+}
+
+.badge-warn {
+  border-color: rgba(240, 180, 41, 0.35);
+  background: var(--amber-dim);
+  color: var(--amber);
+}
+
+.badge-violet {
+  border-color: rgba(139, 124, 255, 0.4);
+  background: var(--violet-dim);
+  color: #c4bbff;
+}
+
+.card {
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 40%), var(--panel);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.progress-track {
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.12);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #22b88a, #2dd4a0);
+}
+
+.progress-fill-violet {
+  background: linear-gradient(90deg, #6d5efc, #8b7cff);
+}
+
+.progress-fill-amber {
+  background: linear-gradient(90deg, #d97706, #f0b429);
+}
+
+input,
+textarea,
+select {
+  background: var(--bg-elevated);
+  color: var(--ink);
+  border-color: var(--line-strong);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid rgba(45, 212, 160, 0.35);
+  outline-offset: 1px;
 }
