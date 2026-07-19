@@ -1,24 +1,148 @@
-import Database from "better-sqlite3";
 import fs from "fs";
 import path from "path";
+import { DatabaseSync, type StatementSync } from "node:sqlite";
 
-const DATA_DIR = path.join(process.cwd(), "data");
-const DB_PATH = path.join(DATA_DIR, "hse-launchpad.db");
+/**
+ * Thin better-sqlite3-compatible wrapper over Node's built-in sqlite.
+ * Works on Vercel (in-memory) without native addons.
+ */
 
-let dbInstance: Database.Database | null = null;
+export type RunResult = {
+  lastInsertRowid: number | bigint;
+  changes: number | bigint;
+};
 
-export function getDb(): Database.Database {
-  if (dbInstance) return dbInstance;
-  if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
-  const db = new Database(DB_PATH);
-  db.pragma("journal_mode = WAL");
-  db.pragma("foreign_keys = ON");
-  migrate(db);
-  dbInstance = db;
-  return db;
+export type Statement = {
+  get: (...params: unknown[]) => unknown;
+  all: (...params: unknown[]) => unknown[];
+  run: (...params: unknown[]) => RunResult;
+};
+
+export type AppDatabase = {
+  prepare: (sql: string) => Statement;
+  exec: (sql: string) => void;
+  pragma: (source: string) => void;
+  transaction: <Args extends unknown[], R>(
+    fn: (...args: Args) => R,
+  ) => (...args: Args) => R;
+  close: () => void;
+};
+
+const isServerless =
+  process.env.VERCEL === "1" || Boolean(process.env.AWS_LAMBDA_FUNCTION_NAME);
+
+const isTest = process.env.VITEST === "true" || process.env.NODE_ENV === "test";
+
+const DATA_DIR = isServerless
+  ? path.join("/tmp", "hse-launchpad")
+  : path.join(process.cwd(), "data");
+
+const DB_PATH =
+  isServerless || isTest ? ":memory:" : path.join(DATA_DIR, "hse-launchpad.db");
+
+let dbInstance: AppDatabase | null = null;
+
+function toNodeSql(sql: string): string {
+  // better-sqlite3 @name → node:sqlite $name
+  return sql.replace(/@([A-Za-z_][A-Za-z0-9_]*)/g, "$$$1");
 }
 
-function migrate(db: Database.Database) {
+function bindParams(sql: string, params: unknown[]): unknown[] {
+  if (
+    params.length === 1 &&
+    params[0] !== null &&
+    typeof params[0] === "object" &&
+    !Array.isArray(params[0])
+  ) {
+    const obj = params[0] as Record<string, unknown>;
+    const names = [...sql.matchAll(/\$([A-Za-z_][A-Za-z0-9_]*)/g)].map((m) => m[1]);
+    const unique = [...new Set(names)];
+    if (unique.length > 0) {
+      const mapped: Record<string, unknown> = {};
+      for (const name of unique) {
+        mapped[`$${name}`] =
+          obj[name] ?? obj[`@${name}`] ?? obj[`$${name}`] ?? obj[`:${name}`] ?? null;
+      }
+      return [mapped];
+    }
+  }
+  return params;
+}
+
+function wrapStatement(stmt: StatementSync, sql: string): Statement {
+  return {
+    get: (...params: unknown[]) =>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (stmt.get as any)(...bindParams(sql, params)),
+    all: (...params: unknown[]) =>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (stmt.all as any)(...bindParams(sql, params)) as unknown[],
+    run: (...params: unknown[]) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const result = (stmt.run as any)(...bindParams(sql, params));
+      return {
+        lastInsertRowid: result.lastInsertRowid,
+        changes: result.changes,
+      };
+    },
+  };
+}
+
+function wrapDatabase(db: DatabaseSync): AppDatabase {
+  return {
+    prepare(sql: string) {
+      const converted = toNodeSql(sql);
+      return wrapStatement(db.prepare(converted), converted);
+    },
+    exec(sql: string) {
+      db.exec(sql);
+    },
+    pragma(source: string) {
+      // better-sqlite3: db.pragma('journal_mode = WAL')
+      db.exec(`PRAGMA ${source}`);
+    },
+    transaction<Args extends unknown[], R>(fn: (...args: Args) => R) {
+      return (...args: Args) => {
+        db.exec("BEGIN");
+        try {
+          const value = fn(...args);
+          db.exec("COMMIT");
+          return value;
+        } catch (error) {
+          db.exec("ROLLBACK");
+          throw error;
+        }
+      };
+    },
+    close() {
+      db.close();
+    },
+  };
+}
+
+export function getDb(): AppDatabase {
+  if (dbInstance) return dbInstance;
+  if (!isServerless && !fs.existsSync(DATA_DIR)) {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+  }
+
+  const db = new DatabaseSync(DB_PATH);
+  const appDb = wrapDatabase(db);
+
+  if (!isServerless) {
+    try {
+      appDb.pragma("journal_mode = WAL");
+    } catch {
+      // ignore on environments that reject WAL
+    }
+  }
+  appDb.pragma("foreign_keys = ON");
+  migrate(appDb);
+  dbInstance = appDb;
+  return appDb;
+}
+
+function migrate(db: AppDatabase) {
   db.exec(`
     CREATE TABLE IF NOT EXISTS meta (
       key TEXT PRIMARY KEY,
@@ -184,8 +308,22 @@ function migrate(db: Database.Database) {
 
 export function resetDbForTests() {
   if (dbInstance) {
-    dbInstance.close();
+    try {
+      dbInstance.close();
+    } catch {
+      // ignore
+    }
     dbInstance = null;
   }
-  if (fs.existsSync(DB_PATH)) fs.unlinkSync(DB_PATH);
+  if (DB_PATH !== ":memory:" && fs.existsSync(DB_PATH)) {
+    try {
+      fs.unlinkSync(DB_PATH);
+      for (const suffix of ["-wal", "-shm"]) {
+        const side = `${DB_PATH}${suffix}`;
+        if (fs.existsSync(side)) fs.unlinkSync(side);
+      }
+    } catch {
+      // Windows may lock briefly; next open recreates
+    }
+  }
 }

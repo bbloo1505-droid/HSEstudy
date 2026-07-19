@@ -1,18 +1,12 @@
-import fs from "fs";
-import path from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { resetDbForTests } from "@/lib/db";
+import { getDb, resetDbForTests } from "@/lib/db";
 import { ensureSeeded } from "@/lib/seed";
 import { getDashboard, getLesson, listLessons } from "@/lib/progress";
 import { recordAnswer } from "@/lib/quiz";
-import { getDb } from "@/lib/db";
-
-const DB_PATH = path.join(process.cwd(), "data", "hse-launchpad.db");
 
 describe("progress and seed", () => {
   beforeEach(() => {
     resetDbForTests();
-    if (fs.existsSync(DB_PATH)) fs.unlinkSync(DB_PATH);
     ensureSeeded();
   });
 

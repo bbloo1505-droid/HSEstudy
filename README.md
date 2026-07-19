@@ -2,7 +2,9 @@
 
 Personal learning assistant for an Associate HSE Consultant preparing to start in Queensland (curriculum ends **9 August 2026**).
 
-Your document library and progress stay on this computer (SQLite). **Ask HSE** can use a normal cloud API key (recommended) or optional local Ollama.
+Uses Node.js 22 built-in SQLite (Vercel-friendly). Locally, progress persists under `data/`. On Vercel, the database is in-memory per instance (study content still works; progress may reset on cold starts).
+
+**Ask HSE** uses a cloud API key (Groq/OpenAI-compatible) via environment variables.
 
 ## What you get
 
@@ -37,6 +39,16 @@ copy .env.example .env.local
 ```
 
 Optional: `OPENAI_MODEL=gpt-4o-mini` and `OPENAI_BASE_URL` for other OpenAI-compatible providers.
+
+### Vercel
+
+Set **Node.js 22+** in the project settings, then add:
+
+- `OPENAI_API_KEY`
+- `OPENAI_BASE_URL` (e.g. `https://api.groq.com/openai/v1`)
+- `OPENAI_MODEL` (e.g. `llama-3.3-70b-versatile`)
+
+Redeploy after pushing.
 
 **Optional — Ollama instead:**
 
