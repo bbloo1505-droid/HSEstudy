@@ -10,6 +10,7 @@ const NAV = [
   { href: "/curriculum", label: "Curriculum", icon: "☰" },
   { href: "/consulting", label: "Consulting OS", icon: "◎" },
   { href: "/hazmat-framework", label: "HAZMAT Framework", icon: "⬡" },
+  { href: "/podcasts", label: "Podcasts", icon: "♪" },
   { href: "/lesson", label: "Daily Lesson", icon: "▸" },
   { href: "/ask", label: "Ask HSE", icon: "?" },
   { href: "/library", label: "Source Library", icon: "▦" },
