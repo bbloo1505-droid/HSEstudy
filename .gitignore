@@ -37,14 +37,13 @@ yarn-error.log*
 /data/documents/*
 !/data/documents/.gitkeep
 !/data/documents/README.md
-!/data/documents/*-primer.md
-!/data/documents/*-primer.meta.json
+!/data/documents/*.md
+!/data/documents/*.meta.json
+# Keep binary PDFs out of git (text extracts are enough for Source mode):
+/data/documents/*.pdf
 /data/imports/*
 !/data/imports/.gitkeep
 !/data/imports/IMPORT.md
-# Keep official PDF/text imports local-only (do not commit):
-/data/documents/*official*
-/data/documents/*.pdf
 
 # typescript
 *.tsbuildinfo
