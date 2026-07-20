@@ -12,7 +12,7 @@ import {
 export default function HazmatFrameworkPage() {
   return (
     <AppShell title="HAZMAT risk framework">
-      <Panel eyebrow="Beginner map" title={HAZMAT_FRAMEWORK_INTRO.title}>
+      <Panel eyebrow="Consulting map" title={HAZMAT_FRAMEWORK_INTRO.title}>
         <p className="text-sm leading-relaxed text-[#d7deea]">{HAZMAT_FRAMEWORK_INTRO.plainEnglish}</p>
         <p className="mt-3 rounded-xl border border-[var(--line)] bg-[var(--accent-dim)] px-3 py-2 text-sm text-[var(--accent)]">
           {HAZMAT_FRAMEWORK_INTRO.beginnerNote}

@@ -73,7 +73,7 @@ export function AppShell({
               </p>
             </div>
             <div className="flex flex-wrap gap-2">
-              <span className="badge badge-ok">Beginner mode</span>
+              <span className="badge badge-ok">Consulting depth</span>
               <span className="badge">{dash.documentCount} sources</span>
               <span className="badge badge-warn">{dash.dueCards} flashcards due</span>
             </div>

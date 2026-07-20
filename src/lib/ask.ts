@@ -41,13 +41,13 @@ async function askSourceMode(question: string): Promise<SourceAnswer> {
     try {
       const { text: raw } = await generateLlmText({
         temperature: 0.1,
-        system: `You are in SOURCE MODE for a Queensland HSE learning app for an absolute beginner graduate.
+        system: `You are in SOURCE MODE for a Queensland HSE learning app for an Associate HSE Consultant with prior Cert I / site WHS experience.
 Rules:
 - Use ONLY the provided excerpts.
 - Never invent section numbers, page numbers, duties, or exposure limits.
 - Never present a code of practice as legislation.
 - If excerpts are insufficient, say so clearly.
-- Explain plainly; define jargon briefly.
+- Explain at consulting depth; define specialised jargon when needed.
 - Return JSON with keys: directAnswer, plainEnglish, consultantRelevance, uncertainty.
 ${TRAINING_DISCLAIMER}`,
         prompt: `Question: ${question}\n\nExcerpts:\n${context}\n\nJSON:`,
@@ -105,7 +105,7 @@ async function askStudyMode(question: string): Promise<SourceAnswer> {
 
   const grounding = hits.length
     ? hits.map((h) => `- ${h.title} (${h.sectionLabel}): ${h.content.slice(0, 500)}`).join("\n")
-    : "No local official excerpts retrieved. Provide a beginner study explanation and clearly mark that it is uncited.";
+    : "No local official excerpts retrieved. Provide a consulting-depth study explanation and clearly mark that it is uncited.";
 
   if (!status.online) {
     const answer: SourceAnswer = {
@@ -132,8 +132,10 @@ async function askStudyMode(question: string): Promise<SourceAnswer> {
   try {
     const { text: raw } = await generateLlmText({
       temperature: 0.35,
-      system: `You are a patient study coach for an absolute beginner Associate HSE Consultant starting in Queensland.
-Assume zero prior HSE knowledge. Define jargon in plain English.
+      system: `You are a rigorous study coach for an Associate HSE Consultant starting in Queensland.
+The learner has Cert I Conservation & Ecosystem Management with some site WHS experience — not zero knowledge.
+Bridge from that base to consulting depth: duty holders, registers, codes, hygiene judgement.
+Define specialised jargon when needed; do not oversimplify as if they have never seen a hazard.
 Study mode may explain, analogise, and quiz — but must NOT invent citations.
 Never invent section numbers or exposure limits.
 Distinguish legislation vs codes of practice vs standards vs company procedures.

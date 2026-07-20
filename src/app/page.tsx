@@ -7,11 +7,11 @@ import { getDashboard } from "@/lib/progress";
 export const dynamic = "force-dynamic";
 
 const SESSION_STEPS = [
-  { label: "Closed-book recall", mins: 10 },
-  { label: "Structured lesson", mins: 20 },
-  { label: "Official source reading", mins: 20 },
-  { label: "Applied scenario", mins: 20 },
-  { label: "Quiz + flashcards", mins: 10 },
+  { label: "Closed-book recall", mins: 15 },
+  { label: "In-depth lesson study", mins: 50 },
+  { label: "Official source reading", mins: 30 },
+  { label: "Applied scenario + notes", mins: 30 },
+  { label: "Quiz + flashcards", mins: 20 },
 ];
 
 export default function DashboardPage() {
@@ -21,8 +21,8 @@ export default function DashboardPage() {
   return (
     <AppShell title="Good study session">
       <div className="rounded-xl border border-[var(--line)] bg-[var(--accent-dim)] px-4 py-3 text-sm text-[var(--accent)]">
-        Absolute beginner mode — you are not expected to know this yet. Learn words and habits
-        first. Asking beats guessing.
+        Consulting-depth mode — builds on your Cert I / site WHS experience toward Associate HSE
+        judgement. Still escalate uncertainty; do not invent limits or section numbers.
       </div>
 
       <div className="grid gap-5 xl:grid-cols-[1.4fr_0.9fr]">
@@ -34,7 +34,7 @@ export default function DashboardPage() {
           <div className="grid gap-5 lg:grid-cols-2">
             <div>
               <p className="mb-3 text-xs text-[var(--muted)]">
-                {data.todayLesson?.dayDate} · ~80 minute weekday shape
+                {data.todayLesson?.dayDate} · ~2.5 hour weekday shape
               </p>
               <ul className="space-y-2">
                 {SESSION_STEPS.map((step) => (

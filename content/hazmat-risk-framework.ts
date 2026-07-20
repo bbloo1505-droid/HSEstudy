@@ -1,14 +1,14 @@
 /**
- * Beginner HAZMAT risk framework for Associate HSE Consultant prep.
+ * HAZMAT risk framework for Associate HSE Consultant prep.
  * Educational summary — verify against Queensland WHS law, approved codes and employer procedures.
  */
 
 export const HAZMAT_FRAMEWORK_INTRO = {
   title: "5-step HAZMAT risk framework",
   plainEnglish:
-    "This is a simple way consultants think about hazardous materials jobs. You do not need to memorise every chemical. Learn the steps, the words, and what evidence each step needs.",
+    "This is how consultants structure hazardous materials jobs. Use it to organise evidence, controls and reporting — then deepen each step with the daily lessons and codes.",
   beginnerNote:
-    "Starting from zero is fine. Treat this as a map. On real jobs you will follow Prensa’s templates and your supervisor’s scope.",
+    "You already have site WHS habits from Cert I. Treat this as the consulting map. On real jobs follow Prensa’s templates and your supervisor’s scope.",
 };
 
 export const HAZMAT_STEPS = [

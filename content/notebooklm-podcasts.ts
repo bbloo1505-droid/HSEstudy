@@ -8,7 +8,7 @@ export const NOTEBOOKLM_SETUP = {
   length: "Long",
   language: "English",
   audienceLine:
-    "Audience: absolute beginner Associate HSE Consultant starting in Queensland on 10 August 2026. Explain from zero. Define jargon. No invented section numbers or exposure limits. Distinguish Act vs Regulation vs codes. End with a 10-question verbal quiz and explained answers. Speak clearly with worked examples, a mid-episode recap, and repetition of key definitions.",
+    "Audience: Associate HSE Consultant starting in Queensland on 10 August 2026, with Cert I Conservation & Ecosystem Management and some site WHS experience. Bridge to consulting depth — do not teach as if they have never seen a hazard. Define specialised jargon. No invented section numbers or exposure limits. Distinguish Act vs Regulation vs codes. End with a 10-question verbal quiz and explained answers. Speak clearly with worked examples, a mid-episode recap, and repetition of key definitions.",
   tip: "Long is the closest NotebookLM setting to ~1 hour (not guaranteed). Prefer only the listed sources for each episode — do not select all sources every time.",
 };
 

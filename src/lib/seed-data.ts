@@ -1,4 +1,5 @@
 import type { TopicId } from "./types";
+import { applyDeepLessons } from "./lessons/apply-deep";
 
 export interface TopicSeed {
   id: TopicId;
@@ -72,7 +73,7 @@ export const TOPICS: TopicSeed[] = [
   { id: "consulting_practice", label: "Consulting practice", sortOrder: 13 },
 ];
 
-export const LESSONS: LessonSeed[] = [
+const LESSONS_BASE: LessonSeed[] = [
   {
     id: "w1-mon",
     dayDate: "2026-07-20",
@@ -938,6 +939,9 @@ Use the MOCK_PROJECT checklist to track deliverables. Pace yourself: scope and g
     sessionPlan: "Full-day capstone (6–8 hours): scope and plan block; technical deliverables; 100-question test; five supervisor questions; self-review against checklist.",
   },
 ];
+
+/** Consulting-depth overlays applied on top of base lesson shells. */
+export const LESSONS: LessonSeed[] = applyDeepLessons(LESSONS_BASE);
 
 export const QUIZ_BANK: QuizQuestionSeed[] = [
   {

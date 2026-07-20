@@ -42,7 +42,14 @@ export default async function LessonPage({
         </div>
       </Panel>
 
-      <Panel title="Beginner explanation">
+      <Panel
+        eyebrow="Study depth"
+        title="In-depth explanation"
+      >
+        <p className="mb-3 text-xs text-[var(--muted)]">
+          Builds from Cert I / site WHS experience toward Associate HSE consulting judgement —
+          not a zero-knowledge skim.
+        </p>
         <div className="prose-study whitespace-pre-wrap text-sm leading-relaxed">
           {lesson.explanation}
         </div>

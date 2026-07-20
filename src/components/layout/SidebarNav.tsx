@@ -65,7 +65,7 @@ export function SidebarNav({
         </div>
         <div className="mt-3 flex flex-wrap gap-1.5">
           <span className={llmOk ? "badge badge-ok" : "badge badge-warn"}>{llmLabel}</span>
-          <span className="badge">Beginner</span>
+          <span className="badge">Cert I → consulting</span>
         </div>
       </div>
 
@@ -116,9 +116,9 @@ export function SidebarNav({
       <div className="grid grid-cols-2 gap-2">
         <div className="rounded-xl border border-[var(--line)] bg-[var(--bg-soft)] p-3">
           <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--muted)]">
-            Beginner
+            Depth
           </p>
-          <p className="mt-1 text-sm font-semibold text-[var(--accent)]">From zero</p>
+          <p className="mt-1 text-sm font-semibold text-[var(--accent)]">Cert I → HSE</p>
         </div>
         <div className="rounded-xl border border-[var(--line)] bg-[var(--bg-soft)] p-3">
           <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--muted)]">

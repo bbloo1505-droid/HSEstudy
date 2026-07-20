@@ -2,39 +2,39 @@
  * Graduate consulting operating system for Associate HSE Consultant prep.
  * Educational framing — not Prensa confidential procedures or templates.
  *
- * Learner profile: absolute beginner — no prior HSE consulting, hazmat or
- * occupational hygiene practice. Every session starts from first principles.
+ * Learner profile: Cert I Conservation & Ecosystem Management with site WHS
+ * experience — bridging into hazmat / hygiene consulting judgement.
  */
 
 export const LEARNER_PROFILE = {
-  level: "absolute_beginner" as const,
+  level: "cert1_bridge_to_consulting" as const,
   statement:
-    "You are starting from zero. That is expected. You are not meant to arrive as an occupational hygienist — only as safe, organised, coachable and reliable.",
+    "You already have site WHS habits from Cert I. You are not expected to arrive as an occupational hygienist — you are building consulting depth: duty holders, registers, codes, evidence and escalation.",
   rules: [
-    "Never pretend you already understand — ask or look it up.",
-    "Learn the vocabulary before the detail.",
-    "One concept at a time: definition → simple example → why a consultant cares.",
+    "Use what you know from site WHS — then upgrade the legal and reporting precision.",
+    "Bridge: definition → consulting example → what goes in the report.",
     "Prefer verification over sounding competent.",
     "Escalate uncertainty; do not improvise on site.",
+    "Never invent section numbers or exposure limits.",
   ],
 };
 
 export const CONSULTING_JOB_STATEMENT = {
-  title: "What the job actually is (beginner version)",
-  body: `You do not need to know every hazardous material yet.
+  title: "What the job actually is (consulting-depth version)",
+  body: `You already understand hazards, PPE and looking after people on site. Consulting adds scoped advice to duty holders.
 
 In plain terms, consultants help clients make safer, legally defensible decisions when something at a workplace might harm people’s health (for example asbestos, dust, chemicals or noise).
 
-The repeating job, once you are trained, is:
+The repeating job is:
 
-1. Understand what the client is actually asking for (the scope).
-2. Look for things that could cause harm (hazards).
-3. Collect evidence carefully (notes, photos, samples).
-4. Check that evidence against rules and good practice.
-5. Recommend practical controls (fix the source first; masks last).
-6. Write it down so someone else can follow your reasoning.
+1. Understand what the client is actually asking for (the scope) and who the PCBU is.
+2. Look for things that could cause harm (hazards) and who could be exposed.
+3. Collect evidence carefully (notes, photos, samples, CoC).
+4. Check that evidence against Queensland instruments and good practice — label requirement vs guidance vs opinion.
+5. Recommend practical controls (fix the source first; masks last) with residual risk and limitations.
+6. Write it down so a supervisor and the client can follow your reasoning.
 
-Right now your only job is to learn the words, the sequence, and the habits. Reliability beats cleverness.`,
+Reliability and precision beat cleverness. Depth beats skimming.`,
 };
 
 export const PROJECT_SEQUENCE = [
@@ -202,7 +202,7 @@ export const WEEKDAY_PREP_SESSIONS: WeekdayPrepSession[] = [
   {
     date: "2026-07-20",
     week: 1,
-    title: "Day 1 from zero — what consulting is + the legal ladder",
+    title: "Day 1 bridge — what consulting is + the legal ladder",
     focus: [
       "Beginner: you are not expected to know this yet — learn the words first",
       "Project sequence in plain English: ask → plan → look → sample → lab → explain → recommend → write",
@@ -212,9 +212,9 @@ export const WEEKDAY_PREP_SESSIONS: WeekdayPrepSession[] = [
     closedBook:
       "Without notes: (1) what does 'scope' mean? (2) name any 4 of the 8 project stages in order.",
     practice:
-      "In 5 plain sentences, rewrite this client ask so a beginner could explain it to a supervisor: 'Check if we can drill this wall.' Include what you still need to ask.",
+      "In 5 plain sentences, rewrite this client ask for a supervisor: 'Check if we can drill this wall.' Include PCBU/scope questions and what you still need to ask.",
     readingHint:
-      "HSE Launchpad lesson w1-mon beginner explanation only (skip deep sections). Skim risks COP contents page — do not read the whole PDF yet.",
+      "HSE Launchpad lesson w1-mon in-depth explanation (all sections). Skim risks COP contents page — do not read the whole PDF yet.",
     launchpadLessonId: "w1-mon",
   },
   {

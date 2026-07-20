@@ -3,7 +3,7 @@ import { importLocalDocuments } from "./documents";
 import { LESSONS, MOCK_PROJECT, QUIZ_BANK, SCENARIOS, TOPICS } from "./seed-data";
 import { createCard, todayIso } from "./srs";
 
-const SEED_VERSION = "1";
+const SEED_VERSION = "2";
 
 export function ensureSeeded(): void {
   const db = getDb();
